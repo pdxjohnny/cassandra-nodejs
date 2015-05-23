@@ -1,8 +1,9 @@
+var config = require('./config');
 var cassandra = require('cassandra-driver');
 var async = require('async');
 var assert = require('assert');
 
-var client = new cassandra.Client({ contactPoints: ['192.168.1.65']});
+var client = new cassandra.Client({ contactPoints: [config.host]});
 
 
 client.connect(function (err) {
@@ -10,17 +11,18 @@ client.connect(function (err) {
     client.shutdown();
     return console.error('There was an error when connecting', err);
   }
-  client.eachRow('SELECT * FROM \"examples\".\"basic\"', [],
+  var query = 'SELECT * FROM \"examples\".\"basic\"';
+  client.eachRow(query, [], {autoPage: true},
+    // On recv row
     function(n, row) {
-      //the callback will be invoked per each row as soon as they are received
-      // minTemperature = Math.min(row.val, minTemperature);
-      console.log(row)
+      console.log(row);
     },
+    // End Callbask
     function (err) {
       assert.ifError(err);
+      client.shutdown();
     }
   );
-  client.shutdown();
 });
 
 

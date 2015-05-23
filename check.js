@@ -1,6 +1,7 @@
+var config = require('./config');
 var cassandra = require('cassandra-driver');
 
-var client = new cassandra.Client({ contactPoints: ['192.168.1.65']});
+var client = new cassandra.Client({ contactPoints: [config.host]});
 
 client.connect(function (err) {
   if (err) {
