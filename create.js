@@ -2,7 +2,7 @@ var cassandra = require('cassandra-driver');
 var async = require('async');
 var assert = require('assert');
 
-var client = new cassandra.Client({ contactPoints: ['127.0.0.1']});
+var client = new cassandra.Client({ contactPoints: ['192.168.1.65']});
 
 /**
  * Example using async library for avoiding nested callbacks
