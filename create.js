@@ -44,7 +44,6 @@ async.series([
   if (err) {
     console.error('There was an error', err.message, err.stack);
   }
-  console.log('Shutting down');
   client.shutdown();
 });
 
